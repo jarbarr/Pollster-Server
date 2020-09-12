@@ -1,0 +1,51 @@
+{
+  "name": "pollster",
+  "version": "1.0.0",
+  "description": "aka vote.ly",
+  "author": "Jared Barron",
+  "license": "",
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "qc": "nodemon server/index.js",
+    "queen": "node server/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "seed": "node ./db/seed.js",
+    "build": "webpack --mode production",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios --simulator='iphone11-sim'",
+    "start": "react-native start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "babel-jest": "^26.2.2",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "jest": "^26.2.2",
+    "jest-enzyme": "^7.1.2",
+    "jquery": "^3.5.1",
+    "mariadb": "^2.4.2",
+    "moment": "^2.10.0",
+    "nodemon": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-native": "^0.63.2",
+    "webpack": "^4.44.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.5.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
