@@ -20,7 +20,12 @@ app.use('/', express.static(path.join(__dirname, '../client/public')));
                          // Routes \\
 // ============================================================= \\
 
-// app.get()
+app.get('/users', (req, res) => {controllers.getUsers(req, res)});
+app.get('/elections', (req, res) => {controllers.getUpcomingElections(req, res)});
+app.get('/elections/results', (req, res) => {controllers.getElectionResults(req, res)});
+app.post('/users', (req, res) => {controllers.addUser(req, res)});
+app.put('/elections', (req, res) => {controllers.editUser(req, res)});
+app.delete('/elections', (req, res) => {controllers.deleteUser(req, res)});
 
 // ============================================================= \\
                       // Start Server \\

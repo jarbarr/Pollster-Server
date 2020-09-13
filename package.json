@@ -6,15 +6,13 @@
   "license": "",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "qc": "nodemon server/index.js",
+    "start": "nodemon server/index.js",
     "queen": "node server/index.js",
+    "maria": "mariadb -u jarbarr -p < ./dbms/schema.sql",
     "test": "jest",
     "test:watch": "jest --watch",
     "seed": "node ./db/seed.js",
     "build": "webpack --mode production",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator='iphone11-sim'",
-    "start": "react-native start",
     "lint": "eslint ."
   },
   "dependencies": {

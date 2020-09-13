@@ -2,24 +2,23 @@ const mariadb = require('mariadb');
 const config = require('./config.js');
 
 const pool = mariadb.createPool({
-    //  host: 'localhost',
+     host: 'localhost',
      user: config.username,
      password: config.password,
      database: 'Pollster',
      connectionLimit: 5
 });
-pool.getConnection()
+const conn = pool.getConnection()
     .then(conn => {
-
-      conn.query("SELECT 1 as val")
+      conn.query("SELECT * from Setup")
         .then((rows) => {
-          console.log('hanging with Maria @', rows[0].val); //[ {val: 1}, meta: ... ]
+          console.log(`"Hey Maria! What time it is?" \nMaria: "Hello ${config.username}, it is exactly"`, rows[0].today);
           //Table must have been created before
           // " CREATE TABLE myTable (id int, val varchar(255)) "
-          return conn.query("INSERT INTO myTable value (?, ?)", [1, "mariadb"]);
+          return conn.query(`INSERT INTO Setup(id) value (${1})`);
         })
         .then((res) => {
-          console.log('db results:', res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
+          //console.log('db response:', res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
           conn.end();
         })
         .catch(err => {
@@ -30,7 +29,10 @@ pool.getConnection()
 
     }).catch(err => {
       //not connected
+      console.log('Maria: \' you are not connected \'')
     });
+
+    module.exports = conn;
 
 // ============================================================= \\
                        // ECMA SCRIPT  \\
