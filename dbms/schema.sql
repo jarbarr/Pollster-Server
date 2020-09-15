@@ -27,7 +27,18 @@ CREATE TABLE Users (
   lastName VARCHAR(100) NOT NULL,
   email VARCHAR(20) NOT NULL,
   mobile VARCHAR(15) NOT NULL,
+  party VARCHAR(20),
   PRIMARY KEY(id)
+);
+
+CREATE TABLE UsersPreferences (
+  id INT AUTO_INCREMENT NOT NULL,
+  userID INT NOT NULL,
+  colorScheme VARCHAR(20) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(userID)
+    REFERENCES Users(id)
+    ON DELETE CASCADE
 );
 
 -- DROP TABLE IF EXISTS Users_1;
