@@ -6,6 +6,7 @@
 const path = require('path');
 const express = require('express');
 const maria = require('../dbms/index.js');
+const controllers = require('./controllers.js')
 const PORT = 5291
 
 const app = express();
@@ -14,13 +15,14 @@ const app = express();
                        // Middleware \\
 // ============================================================= \\
 
+app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../client/public')));
 
 // ============================================================= \\
                          // Routes \\
 // ============================================================= \\
 
-app.get('/users', (req, res) => {controllers.findUser(req, res)});
+app.get('/users', (req, res) => {controllers.findUser(req, res) });
 app.get('/elections', (req, res) => {controllers.getUpcomingElections(req, res)});
 app.get('/elections/results', (req, res) => {controllers.getElectionResults(req, res)});
 app.post('/users', (req, res) => {controllers.addUser(req, res)});

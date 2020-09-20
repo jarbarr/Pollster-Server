@@ -2,57 +2,60 @@ const models = require('../dbms/models.js');
 
 module.exports = {
   findUser: (req, res) => {
-    console.log(req.params);
-    models.findUser((err, data) => {
+    console.log('controller recieved data:', req.query);
+    models.findUser(req.query, (err, data) => {
       if (err) {
-        res.status(200).send(err);
+        console.log('controller err:', err)
+        res.status(400).send(err);
       } else {
-        res.status(404).send(data)
+        console.log('controller data')
+        res.status(200).send(data);
       }
     })
   },
   getUpcomingElections: (req, res) => {
     models.placeholder((err, data) => {
       if (err) {
-        res.status(200).send(err);
+        res.status(404).send(err);
       } else {
-        res.status(404).send(data)
+        res.status(200).send(data)
       }
     })
   },
   getElectionResults: (req, res) => {
     models.placeholder((err, data) => {
       if (err) {
-        res.status(200).send(err);
+        res.status(404).send(err);
       } else {
-        res.status(404).send(data)
+        res.status(200).send(data)
       }
     })
   },
   addUser: (req, res) => {
-    models.addUser((err, data) => {
+    // console.log('controllers recieved:', req.body)
+    models.addUser(req.body, (err) => {
       if (err) {
-        res.status(201).send(err);
+        res.status(400).send(err);
       } else {
-        res.status(400).send()
+        res.status(201).send()
       }
     })
   },
   editUser: (req, res) => {
     models.placeholder((err, data) => {
       if (err) {
-        res.status(200).send(err);
+        res.status(404).send(err);
       } else {
-        res.status(404).send()
+        res.status(200).send()
       }
     })
   },
   deleteUser: (req, res) => {
     models.placeholder((err, data) => {
       if (err) {
-        res.status(200).send(err);
+        res.status(404).send(err);
       } else {
-        res.status(404).send()
+        res.status(200).send()
       }
     })
   }

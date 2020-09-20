@@ -1,4 +1,6 @@
--- DROP DATABASE IF EXISTS Pollster;
+DROP DATABASE IF EXISTS Pollster;
+
+CREATE DATABASE Pollster;
 
 USE Pollster;
 
@@ -23,11 +25,12 @@ DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
   id INT AUTO_INCREMENT NOT NULL,
-  firstName VARCHAR(100) NOT NULL,
-  lastName VARCHAR(100) NOT NULL,
-  email VARCHAR(20) NOT NULL,
+  firstName VARCHAR(15) NOT NULL,
+  lastName VARCHAR(15) NOT NULL,
+  email VARCHAR(30) NOT NULL,
   mobile VARCHAR(15) NOT NULL,
-  party VARCHAR(20),
+  party VARCHAR(15),
+  password VARCHAR(20) NOT NULL,
   PRIMARY KEY(id)
 );
 
