@@ -13,10 +13,10 @@ pool.getConnection()
     .then(conn => {
       conn.query("SELECT * from Setup")
         .then((rows) => {
-          console.log(`"Hey Maria! What time it is?" \nMaria: "Hello ${config.username}, it is exactly"`, rows[0].today);
+          console.log(`"Hey Maria! What time is it?" \nMaria: "Hello ${config.username}, it is exactly"`, rows[0].today);
           //Table must have been created before
           // " CREATE TABLE myTable (id int, val varchar(255)) "
-          return conn.query(`INSERT INTO Setup(id) value (${1})`);
+          // return conn.query(`INSERT INTO Setup(id) value (${1})`);
         })
         .then((res) => {
           //console.log('db response:', res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
@@ -39,24 +39,6 @@ pool.getConnection()
 
     module.exports = pool;
 
-    // const conn = mariadb.createConnection({
-//   host: 'localhost',
-//   user: config.username,
-//   password: config.password,
-//   database: 'Pollster',
-//   connectionLimit: 5
-// });
-
-// conn.query("SELECT * from Setup", (err, rows) => {
-//   console.log(`"Hey Maria! What time it is?" \nMaria: "Hello ${config.username}, it is exactly"`, rows[0].today); //[ {val: 1}, meta: ... ]
-//   conn.query(`INSERT INTO Setup(id) value (${1})`, (err, res) => {
-//     // console.log(res);  { affectedRows: 1, insertId: 1, warningStatus: 0 }
-//     // conn.end();
-//   });
-// });
-
-// module.exports = conn;
-
 // ============================================================= \\
                   // POOL | ECMA SCRIPT  | ASYNC AWAIT \\
 // ============================================================= \\
@@ -78,4 +60,28 @@ async function asyncFunction() {
   }
 }
 
+*/
+
+// ============================================================= \\
+                  // single connection \\
+// ============================================================= \\
+
+/*
+    const conn = mariadb.createConnection({
+  host: 'localhost',
+  user: config.username,
+  password: config.password,
+  database: 'Pollster',
+  connectionLimit: 5
+});
+
+conn.query("SELECT * from Setup", (err, rows) => {
+  console.log(`"Hey Maria! What time it is?" \nMaria: "Hello ${config.username}, it is exactly"`, rows[0].today); //[ {val: 1}, meta: ... ]
+  conn.query(`INSERT INTO Setup(id) value (${1})`, (err, res) => {
+    // console.log(res);  { affectedRows: 1, insertId: 1, warningStatus: 0 }
+    // conn.end();
+  });
+});
+
+module.exports = conn;
 */

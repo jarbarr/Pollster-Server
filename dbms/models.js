@@ -2,81 +2,74 @@ const conn = require('./index.js');
 
 module.exports = {
   findUser: (request, callback) => {
-    const queryString = `SELECT * FROM Users where Users.email = '${request.email}' AND Users.mobile = '${request.mobile}' AND Users.password = '${request.password}';`;
+    const queryString = `SELECT Users.firstName, Users.lastname, Users.email, Users.mobile, Users.password, UserInfo.address1, UserInfo.address2, UserInfo.city, UserInfo.state, UserInfo.zipcode, UserInfo.party FROM Users, UserInfo where Users.email = '${request.email}' AND Users.mobile = '${request.mobile}' AND Users.password = '${request.password}' AND UserInfo.user_id = (SELECT id FROM Users WHERE Users.email = '${request.email}');`;
     conn.query(queryString)
       .then((rows) => {
-        console.log('Maria: you did it, you did it, you did it...yay!!!:', rows[0]);
-        return callback(null, rows[0]);
+        console.log(`models | findUser success: ${rows[0]}`);
+        callback(null, rows[0]);
+        // conn.end();
+      })
+      .catch(err => {
+        console.error(`models | findUser error: ${err}`);
+        callback(err, null);
+        // conn.end()
+      })
+  },
+
+  addUser: (request, callback) => {
+    // let firstName =
+    const queryString = `INSERT INTO Users (firstName, lastName, email, mobile, password) VALUES ('${request.firstName}', '${request.lastName}', '${request.email}', '${request.mobile}', '${request.password}');`;
+    conn.query(queryString)
+      .then((rows) => {
+        // console.log(`models | addUsers success`);
+        callback(null);
+      })
+      .catch(err => {
+        // console.error(`models | addUsers error: ${err}`);
+        callback(err, null);
+      });
+  },
+  addUserInfo: (request, callback) => {
+    // let firstName =
+    const queryString = `INSERT INTO UserInfo (address1, address2, city, state, zipcode, party, user_id) VALUES ('${request.form2.address1}', '${request.form2.address2}','${request.form2.city}', '${request.form2.state}', '${request.form2.zip}', '${request.form3.party}', (SELECT id FROM Users WHERE email = '${request.form1.email}'));`;
+    conn.query(queryString)
+      .then((rows) => {
+        // console.log(`models | addUserInfo success`);
+        callback(null);
+        callback(null);
+      })
+      .catch(err => {
+        // console.error(`models | addUserInfo error: ${err}`);
+        callback(err, null);
+      });
+  },
+  updateUser: (request, callback) => {
+    const queryString = `Insert into Users where (firstName, lastName, email, mobile) = values(${request.firstName}, ${request.lastName}, ${request.email}, ${request.mobile})`;
+    conn.query(queryString)
+      .then((rows) => {
+        // console.log(`models | editUser success: ${rows[0]}`);
+        callback(null, rows[0]);
+        // return callback(null, rows[0]);
         conn.end();
       })
       .catch(err => {
-        console.error('Maria: you effed up! check your models baby:', err);
+        // console.error(`models | editUser error: ${err}`);
         callback(err, null);
         conn.end()
       })
   },
-// module.exports = {
-//   findUser: (request, callback) => {
-//     const queryString = `SELECT * FROM Users where Users.email = '${request.email}' AND Users.mobile = '${request.mobile}' AND Users.password = '${request.password}';`;
-//     conn.query(queryString, (err, results, fields) => {
-//       if (err) {
-//         console.error('Maria: you effed up! check your models baby:', err);
-//         callback(err, null);
-//       } else {
-//         console.log('Maria: you did it, you did it, you did it...yay!!!:', results[0]);
-//         callback(null, results);
-//         // conn.end();
-//       }
-//       conn.release()
-//     });
-//   },
-  addUser: (request, callback) => {
-    // let firstName =
-    const queryString = `INSERT INTO Users (firstName, lastName, email, mobile, party, password) VALUES ('${request.firstName}', '${request.lastName}', '${request.email}', '${request.mobile}', '${request.party}', '${request.password}');`;
-    conn.query(queryString, ((err, results, fields) => {
-      if (err) {
-        console.error('Maria: you effed up! check your models baby:', err);
-        callback(err, null);
-      } else {
-        console.log('Maria: you did it, you did it, you did it...yay!!!:', results, fields);
-        callback(null, results, fields);
-      }
-    }))
-  },
-  addUserPreferences: (request, callback) => {
-    const queryString = `Insert into Users where (firstName, lastName, email, mobile) = values(${request.firstName}, ${request.lastName}, ${request.email}, ${request.mobile})`;
-    conn.query(queryString, ((err, results, fields) => {
-      if (err) {
-        console.error('Maria: you effed up! check your models baby:', error);
-        callback(err, null);
-      } else {
-        console.log('Maria: you did it, you did it, you did it...yay!!!:', results, fields);
-        callback(null, results);
-      }
-    }))
-  },
-  updateUser: (request, callback) => {
-    const queryString = `Insert into Users where (firstName, lastName, email, mobile) = values(${request.firstName}, ${request.lastName}, ${request.email}, ${request.mobile})`;
-    conn.query(queryString, ((err, results, fields) => {
-      if (err) {
-        console.error('Maria: you effed up! check your models baby:', error);
-        callback(err, null);
-      } else {
-        console.log('Maria: you did it, you did it, you did it...yay!!!:', results, fields);
-        callback(null, results);
-      }
-    }))
-  },
   deleteUser: (request, callback) => {
     const queryString = `delete from Users where (firstName, lastName, email, mobile) = values(${request.firstName}, ${request.lastName}, ${request.email}, ${request.mobile})`;
-    conn.query(queryString, ((err, results, fields) => {
-      if (err) {
-        console.error('Maria: you effed up! check your models baby:', error);
+    conn.query(queryString)
+      .then((rows) => {
+        // console.log(`models | deleteUser success: ${rows[0]}`);
+        return callback(null, rows[0]);
+        conn.end();
+      })
+      .catch(err => {
+        // console.error(`models | deleteUser error: ${err}`);
         callback(err, null);
-      } else {
-        console.log('Maria: you did it, you did it, you did it...yay!!!:', results, fields);
-        callback(null, results);
-      }
-    }))
-  },
-}
+        conn.end()
+      })
+  }
+};

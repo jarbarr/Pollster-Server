@@ -4,7 +4,7 @@ CREATE DATABASE Pollster;
 
 USE Pollster;
 
-DROP TABLE IF EXISTS Setup;
+-- DROP TABLE IF EXISTS Setup;
 
 CREATE TABLE Setup (
   id INT,
@@ -13,15 +13,18 @@ CREATE TABLE Setup (
     DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS Elections;
+INSERT INTO Setup(id) VALUE (1);
 
-CREATE TABLE Elections (
-  id INT AUTO_INCREMENT NOT NULL,
-  date DATETIME NOT NULL,
-  PRIMARY KEY(id)
-);
+-- DROP TABLE IF EXISTS Elections;
 
-DROP TABLE IF EXISTS Users;
+-- CREATE TABLE Elections (
+--   id INT AUTO_INCREMENT NOT NULL,
+--   date DATETIME NOT NULL,
+--   PRIMARY KEY(id)
+-- );
+
+-- DROP TABLE IF EXISTS UserInfo;
+-- DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
   id INT AUTO_INCREMENT NOT NULL,
@@ -29,19 +32,24 @@ CREATE TABLE Users (
   lastName VARCHAR(15) NOT NULL,
   email VARCHAR(30) NOT NULL,
   mobile VARCHAR(15) NOT NULL,
-  party VARCHAR(15),
   password VARCHAR(20) NOT NULL,
+  CONSTRAINT Users_unique UNIQUE (email, mobile),
   PRIMARY KEY(id)
 );
 
-CREATE TABLE UsersPreferences (
+CREATE TABLE UserInfo (
   id INT AUTO_INCREMENT NOT NULL,
-  userID INT NOT NULL,
-  colorScheme VARCHAR(20) NOT NULL,
+  user_id INT NOT NULL,
+  address1 VARCHAR(30) NOT NULL,
+  address2 VARCHAR(30),
+  city VARCHAR(30) NOT NULL,
+  state VARCHAR(30) NOT NULL,
+  zipcode VARCHAR(15) NOT NULL,
+  party VARCHAR(15),
   PRIMARY KEY(id),
-  FOREIGN KEY(userID)
-    REFERENCES Users(id)
+  FOREIGN KEY(user_id) REFERENCES Users(id)
     ON DELETE CASCADE
+    ON UPDATE RESTRICT
 );
 
 -- DROP TABLE IF EXISTS Users_1;
