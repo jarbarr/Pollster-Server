@@ -33,6 +33,8 @@ CREATE TABLE Users (
   email VARCHAR(30) NOT NULL,
   mobile VARCHAR(15) NOT NULL,
   password VARCHAR(20) NOT NULL,
+  private_Key VARCHAR(64) NOT NULL,
+  public_Key VARCHAR(64) NOT NULL,
   CONSTRAINT Users_unique UNIQUE (email, mobile),
   PRIMARY KEY(id)
 );

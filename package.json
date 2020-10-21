@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "aka vote.ly",
   "author": "Jared Barron",
-  "license": "",
   "scripts": {
     "bundle": "webpack -d --watch",
     "start": "nodemon server/index.js",
@@ -11,7 +10,7 @@
     "maria": "mariadb -u jarbarr -p < ./dbms/schema.sql",
     "test": "jest",
     "test:watch": "jest --watch",
-    "seed": "node ./db/seed.js",
+    "seed": "node ./dbms/seed.js",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -27,7 +26,7 @@
     "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-native": "^0.63.2",
+    "secp256k1": "^3.8.0",
     "webpack": "^4.44.1"
   },
   "devDependencies": {
@@ -36,7 +35,6 @@
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "@babel/runtime": "^7.6.2",
-    "@react-native-community/eslint-config": "^0.0.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.5.1",
