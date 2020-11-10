@@ -9,13 +9,13 @@ module.exports = {
   // ============================================================= \\
 
   findUser: (req, res) => {
-    console.log('controller recieved data:', req.query);
+    // console.log('controller recieved data:', req.query);
     models.findUser(req.query, (err, data) => {
       if (err) {
-        console.log(`controllers | findUser error: ${err}`);
+        // console.log(`controllers | findUser error: ${err}`);
         res.status(404).send(err);
       } else {
-        console.log(`controllers | findUser success: ${data}`);
+        // console.log(`controllers | findUser success: ${data}`);
         res.status(200).send(data);
       }
     })
@@ -25,34 +25,46 @@ module.exports = {
     // console.log('controllers recieved:', req.body)
     models.addUser(req.body.form1, (err) => {
       if (err) {
-        console.log(`controllers | addUser failure: ${err}`);
+        // console.log(`controllers | addUser failure: ${err}`);
         res.status(400).send(err);
       } else {
-        console.log(`controllers | addUser success`);
+        // console.log(`controllers | addUser success`);
         res.status(201).send()
       }
     })
-    models.addUserInfo(req.body, (err) => {
-      if (err) {
-        console.log(`controllers | addUserInfo failure: ${err}`);
-        res.status(400).send(err);
-      } else {
-        console.log(`controllers | addUserInfo success`);
-        res.status(201).send()
-      }
-    })
+    setTimeout(() => {
+      models.addUserInfo(req.body, (err) => {
+        if (err) {
+          // console.log(`controllers | addUserInfo failure: ${err}`);
+          res.status(400).send(err);
+        } else {
+          // console.log(`controllers | addUserInfo success`);
+          res.status(201).send()
+        }
+      })
+    }, 200)
   },
 
   editUser: (req, res) => {
-    models.placeholder((err, data) => {
+    // console.log(`controllers editUser received request: ${req}`);
+    models.updateUser(req.body, (err, data) => {
       if (err) {
-        // console.log(`controllers | editUser success: ${err}`);
+        console.error(`controllers | editUser - ${err}`);
         res.status(404).send(err);
       } else {
-        // console.log(`controllers | editUser success: ${data}`);
-        res.status(200).send()
+        console.log(`controllers | editUser success - ${data}`);
+        res.status(200).send();
       }
-    })
+    });
+    // models.updateUserInfo(req.body.info, (err, data) => {
+    //   if (err) {
+    //     console.error(`controllers | editUser - ${err}`);
+    //     res.status(404).send(err);
+    //   } else {
+    //     console.log(`controllers | editUser success - ${data}`);
+    //     res.status(200).send()
+    //   }
+    // })
   },
 
   deleteUser: (req, res) => {
@@ -103,19 +115,20 @@ module.exports = {
     // console.log(`controllers privKey req recieved:`);
     crypto.generateKeys(req.query, (err, data) => {
       if (err) {
-        console.log(`controllers | createPrivateKey error: ${err}`);
+        // console.error(`controllers | generateKeys error: ${err}`);
         res.status(404).send(err);
       } else {
-        console.log(`controllers | createPrivateKey success: ${data}`);
+        // console.log(`controllers | generateKeys success: ${data}`);
         res.status(200).send(data)
       }
     })
   },
 
   signAndVerify: (req, res) => {
-    crypto.signAndVerify((err, data) => {
+    // console.log(`controllers signAndVerify req received: ${req.body}`)
+    crypto.signAndVerify(req.body, (err, data) => {
       if (err) {
-        // console.log(`controllers | signTransaction success: ${err}`);
+        // console.error(`controllers | signTransaction error: ${err}`);
         res.status(404).send(err);
       } else {
         // console.log(`controllers | signTransaction success: ${data}`);

@@ -26,9 +26,10 @@ app.get('/users', (req, res) => controllers.findUser(req, res));
 app.get('/elections', (req, res) => controllers.getUpcomingElections(req, res));
 app.get('/elections/results', (req, res) => controllers.getElectionResults(req, res));
 app.get('/keys', (req, res) => controllers.generateKeys(req, res));
-app.get('/sign', (req, res) => controllers.signAndVerify(req, res));
+app.put('/sign', (req, res) => controllers.signAndVerify(req, res));
 app.post('/users', (req, res) => controllers.addUser(req, res));
-app.put('/elections', (req, res) => controllers.editUser(req, res));
+app.put('/users', (req, res) => controllers.editUser(req, res));
+// app.put('/elections', (req, res) => controllers.editElections(req, res));
 app.delete('/elections', (req, res) => controllers.deleteUser(req, res));
 
 // ============================================================= \\

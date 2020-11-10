@@ -1,19 +1,19 @@
-DROP DATABASE IF EXISTS Pollster;
+-- DROP DATABASE IF EXISTS Pollster;
 
-CREATE DATABASE Pollster;
+-- CREATE DATABASE Pollster;
 
 USE Pollster;
 
 -- DROP TABLE IF EXISTS Setup;
 
-CREATE TABLE Setup (
-  id INT,
-  today TIMESTAMP
-    ON UPDATE CURRENT_TIMESTAMP
-    DEFAULT CURRENT_TIMESTAMP
-);
+-- CREATE TABLE Setup (
+--   id INT,
+--   today TIMESTAMP
+--     ON UPDATE CURRENT_TIMESTAMP
+--     DEFAULT CURRENT_TIMESTAMP
+-- );
 
-INSERT INTO Setup(id) VALUE (1);
+-- INSERT INTO Setup(id) VALUE (1);
 
 -- DROP TABLE IF EXISTS Elections;
 
@@ -26,28 +26,38 @@ INSERT INTO Setup(id) VALUE (1);
 -- DROP TABLE IF EXISTS UserInfo;
 -- DROP TABLE IF EXISTS Users;
 
-CREATE TABLE Users (
-  id INT AUTO_INCREMENT NOT NULL,
-  firstName VARCHAR(15) NOT NULL,
-  lastName VARCHAR(15) NOT NULL,
-  email VARCHAR(30) NOT NULL,
-  mobile VARCHAR(15) NOT NULL,
-  password VARCHAR(20) NOT NULL,
-  private_Key VARCHAR(64) NOT NULL,
-  public_Key VARCHAR(64) NOT NULL,
-  CONSTRAINT Users_unique UNIQUE (email, mobile),
-  PRIMARY KEY(id)
-);
+-- CREATE TABLE Users (
+--   id INT AUTO_INCREMENT NOT NULL,
+--   firstName VARCHAR(15) NOT NULL,
+--   lastName VARCHAR(15) NOT NULL,
+--   email VARCHAR(30) NOT NULL,
+--   mobile VARCHAR(15) NOT NULL,
+--   password VARCHAR(20) NOT NULL,
+--   private_key VARCHAR(70) NOT NULL,
+--   public_key VARCHAR(70) NOT NULL,
+--   CONSTRAINT Users_unique UNIQUE (email, mobile),
+--   PRIMARY KEY(id)
+-- );
 
-CREATE TABLE UserInfo (
+-- CREATE TABLE UserInfo (
+--   id INT AUTO_INCREMENT NOT NULL,
+--   user_id INT NOT NULL,
+--   address1 VARCHAR(30) NOT NULL,
+--   address2 VARCHAR(30),
+--   city VARCHAR(30) NOT NULL,
+--   state VARCHAR(30) NOT NULL,
+--   zipcode VARCHAR(15) NOT NULL,
+--   party VARCHAR(15),
+--   PRIMARY KEY(id),
+--   FOREIGN KEY(user_id) REFERENCES Users(id)
+--     ON DELETE CASCADE
+--     ON UPDATE RESTRICT
+-- );
+
+CREATE TABLE UserBallots (
   id INT AUTO_INCREMENT NOT NULL,
   user_id INT NOT NULL,
-  address1 VARCHAR(30) NOT NULL,
-  address2 VARCHAR(30),
-  city VARCHAR(30) NOT NULL,
-  state VARCHAR(30) NOT NULL,
-  zipcode VARCHAR(15) NOT NULL,
-  party VARCHAR(15),
+  US_Presidential_Election_11_03_2020 VARCHAR(200) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(user_id) REFERENCES Users(id)
     ON DELETE CASCADE

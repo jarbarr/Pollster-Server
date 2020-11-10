@@ -2,15 +2,15 @@ const conn = require('./index.js');
 
 module.exports = {
   findUser: (request, callback) => {
-    const queryString = `SELECT Users.firstName, Users.lastname, Users.email, Users.mobile, Users.password, Users.public_key, UserInfo.address1, UserInfo.address2, UserInfo.city, UserInfo.state, UserInfo.zipcode, UserInfo.party FROM Users, UserInfo where Users.email = '${request.email}' AND Users.mobile = '${request.mobile}' AND Users.password = '${request.password}' AND UserInfo.user_id = (SELECT id FROM Users WHERE Users.email = '${request.email}');`;
+    const queryString = `SELECT UserBallots.US_Presidential_Election_11_03_2020, Users.id, Users.firstName, Users.lastname, Users.email, Users.mobile, Users.password, Users.private_key, Users.public_key, UserInfo.address1, UserInfo.address2, UserInfo.city, UserInfo.state, UserInfo.zipcode, UserInfo.party FROM Users, UserInfo, UserBallots where Users.email = '${request.email}' AND Users.mobile = '${request.mobile}' AND Users.password = '${request.password}' AND UserInfo.user_id = (SELECT id FROM Users WHERE Users.email = '${request.email}');`;
     conn.query(queryString)
       .then((rows) => {
-        console.log(`models | findUser success: ${rows[0]}`);
+        // console.log(`models | findUser success: ${rows[0]}`);
         callback(null, rows[0]);
         // conn.end();
       })
       .catch(err => {
-        console.error(`models | findUser error: ${err}`);
+        // console.error(`models | findUser error: ${err}`);
         callback(err, null);
         // conn.end()
       })
@@ -34,24 +34,35 @@ module.exports = {
       .then((rows) => {
         // console.log(`models | addUserInfo success`);
         callback(null);
-        callback(null);
       })
       .catch(err => {
         // console.error(`models | addUserInfo error: ${err}`);
         callback(err, null);
       });
   },
-  updateUser: (request, callback) => {
-    const queryString = `Insert into Users where (firstName, lastName, email, mobile) = values(${request.firstName}, ${request.lastName}, ${request.email}, ${request.mobile})`;
+  addUserBallot: (signature, private_key) => {
+    const queryString = `INSERT INTO UserBallots (11_03_2020, user_id) VALUES ('${signature}', (SELECT id FROM Users WHERE private_key = '${private_key}'));`;
     conn.query(queryString)
       .then((rows) => {
-        // console.log(`models | editUser success: ${rows[0]}`);
+        console.log(`models | addUserInfo success`);
+        // callback(null);
+      })
+      .catch(err => {
+        console.error(`models | addUserInfo error: ${err}`);
+        // callback(err, null);
+      });
+  },
+  updateUser: (request, callback) => {
+    console.log('model:', request)
+    const queryString = `UPDATE Users, UserInfo SET Users.firstName = "${request.firstName}", Users.lastName = "${request.lastName}", Users.mobile = "${request.mobile}", UserInfo.address1 = "${request.address1}", UserInfo.address2 = "${request.address2}", UserInfo.city = "${request.city}", UserInfo.state = "${request.state}", UserInfo.zipcode = "${request.zipCode}" WHERE Users.id = UserInfo.user_id AND Users.id = "${request.id}";`;
+    conn.query(queryString)
+      .then((rows) => {
+        // console.log(`models | editUser success - ${rows[0]}`);
         callback(null, rows[0]);
-        // return callback(null, rows[0]);
         conn.end();
       })
       .catch(err => {
-        // console.error(`models | editUser error: ${err}`);
+        // console.error(`models | editUser - ${err}`);
         callback(err, null);
         conn.end()
       })
@@ -61,7 +72,7 @@ module.exports = {
     conn.query(queryString)
       .then((rows) => {
         // console.log(`models | deleteUser success: ${rows[0]}`);
-        return callback(null, rows[0]);
+        callback(null, rows[0]);
         conn.end();
       })
       .catch(err => {
