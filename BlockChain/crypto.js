@@ -31,18 +31,21 @@ module.exports = {
       console.error(`crypto | signAndVerify - error: ${err}`);
       callback(err, null);
     } else {
+      // sign \\
+      console.log(request);
       const privKey = Buffer.from(request.privateKey, 'hex');
-      // console.log('privKey', privKey);
-      const vote = createHash('sha256').update(request.ballot).digest();
-      // console.log('vote', vote);
+      let vote = createHash('sha256');
+      vote.update(request.ballot);
+      vote.update(request.publicKey);
+      vote.update(request.stateKey)
+      vote = vote.digest();
       let sigObj = secp256k1.sign(vote, privKey);
-      // console.log('sigObj', sigObj);
+      // verify \\
       const pubKey = Buffer.from(request.publicKey, 'hex');
-      // console.log('pubKey', pubKey)
       if (secp256k1.verify(vote, sigObj.signature, pubKey)) {
         callback(null, sigObj.signature.toString('hex'));
         models.addUserBallot(sigObj.signature.toString('hex'), request.privateKey)
-        console.log('signature verified');
+        console.log(` signature verified` );
       } else {
         console.log('signature not verified');
       }
